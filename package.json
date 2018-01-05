@@ -19,12 +19,13 @@
   "bugs": {
     "url": "https://github.com/jmhardison/nodeapplabsplat"
   },
-  "homepage": "",
+  "homepage": "https://github.com/jmhardison/nodeapplabsplat",
   "dependencies": {
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
     "request": "^2.81.0",
-    "tedious": "^2.0.0"
+    "tedious": "^2.0.0",
+    "uuid": "^3.1.0"
   },
   "devDependencies": {}
 }
