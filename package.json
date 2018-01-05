@@ -1,0 +1,30 @@
+{
+  "name": "nodeapplabsplat",
+  "version": "1.0.0",
+  "description": "Node App Lab Splat is used for generating test load to SQL in a lab environment. Created for use in Zerto tests.",
+  "main": "server.js",
+  "scripts": {
+    "test": "return 1",
+    "dev": "node ./src/server.js",
+    "devvscode": "node --nolazy --inspect=5858 ./src/server.js",
+    "start": "node ./src/server.js",
+    "lint": "eslint src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jmhardison/nodeapplabsplat"
+  },
+  "author": "Jonathan Hardison <jmh@jonathanhardison.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jmhardison/nodeapplabsplat"
+  },
+  "homepage": "",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "request": "^2.81.0",
+    "tedious": "^2.0.0"
+  },
+  "devDependencies": {}
+}
