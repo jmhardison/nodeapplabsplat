@@ -13,7 +13,7 @@ module.exports = ({config}) => {
     
     // general
     api.get('/', (req, res) => {
-        res.json({status: "running"});
+        res.json({status: "running"}).status(200);
     });
     
     return api;
