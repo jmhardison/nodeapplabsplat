@@ -9,9 +9,6 @@ var express = require('express');
 var config = require('./config');
 var routes = require('./routes');
 var bodyParser = require('body-parser');
-// include and initialize the rollbar library with your access token
-var Rollbar = require("rollbar");
-var rollbar = new Rollbar(process.env.ROLLBARTOKEN);
 
 // consts //
 let app = express();
@@ -38,6 +35,5 @@ app.use('/', routes);
 // listen and binding setup //
 app.server.listen(configInstance.port);
 console.log(`Started API Service on port: ${app.server.address().port}`);
-rollbar.log(`Started API Service on port: ${app.server.address().port}`);
 
 module.exports = app;

@@ -9,6 +9,7 @@ var Connection = require('tedious').Connection;
 var Request = require('tedious').Request;
 var express = require('express');
 var Router = express.Router;
+var TYPES = require('tedious').TYPES;
 //var q = require('q');
 var uuidv4 = require('uuid/v4');
 
@@ -18,8 +19,8 @@ var sqlconfig = {
   server: configInstance.sqlserver,
   userName: configInstance.sqluser,
   password: configInstance.sqlpass,
-  database: configInstance.sqldb,
   options: {
+    database: configInstance.sqldb,
     port: configInstance.sqlport
   }
 };
@@ -35,36 +36,33 @@ module.exports = ({inconfig}) => {
             var connection = new Connection(sqlconfig);
             var uuidstring = uuidv4();
             var epoctime = Date.now();
+            
 
-            connection.on('connect', function(err) {
-
-
-                request = new Request("INSERT INTO SplatRecorder (SplatID, EPOCStamp) VALUES (@SplatID, @EPOCStamp)", 
-                function(err, rowCount) {
-                    if (err) {
+          
+            connection.on('connect', function(err){
+                var request = new Request("INSERT INTO dbo.SplatRecorder (SplatID, EPOCStamp) VALUES (@SplatID, @EPOCStamp); SELECT * FROM dbo.SplatRecorder WHERE SplatID=@SplatID;",
+                function(err){
+                    if(err){
                         console.log(err);
-                    } else { 
-                    }
-                    
-                    var uuidstring = uuidv4();
-                    var epoctime = Date.now();
-
-                    request.addParameter('SplatID', TYPES.UniqueIdentifierN, uuidstring);
-                    request.addParameter('EPOCStamp', TYPES.NVarChar, `The time since EPOC is ${epoctime}`);
-                    
+                    };
+                });
+            
+                request.addParameter('SplatID', TYPES.UniqueIdentifierN, uuidstring);
+                request.addParameter('EPOCStamp', TYPES.NVarChar, `The time since EPOC is ${epoctime}`);
+            
 
 
-                    connection.close();
+                request.on('row', function(columns) {
+                    res.json(columns);
+                });
+
+
+                connection.execSql(request);
             });
+        
+     
 
-            request.on('row', function(columns) {
-                res.send(uuidstring);
-            });
-
-            // In SQL Server 2000 you may need: connection.execSqlBatch(request);
-            connection.execSql(request);
-            }
-            );
+            
 
         }
     });
