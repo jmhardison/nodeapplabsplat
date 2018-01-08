@@ -53,7 +53,7 @@ module.exports = ({inconfig}) => {
 
 
                 request.on('row', function(columns) {
-                    res.json(columns);
+                    res.json(columns).status(200);
                 });
 
 
