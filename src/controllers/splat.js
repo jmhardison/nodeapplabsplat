@@ -40,7 +40,7 @@ module.exports = ({inconfig}) => {
 
           
             connection.on('connect', function(err){
-                var request = new Request("INSERT INTO dbo.SplatRecorder (SplatID, EPOCStamp) VALUES (@SplatID, @EPOCStamp); SELECT * FROM dbo.SplatRecorder WHERE SplatID=@SplatID;",
+                var request = new Request("INSERT INTO dbo.SplatRecorder (SplatID, EPOCStamp) VALUES (@SplatID, @EPOCStamp); SELECT SERVERPROPERTY('MachineName') AS [ServerName], [SplatID], [EPOCStamp] FROM dbo.SplatRecorder WHERE SplatID=@SplatID;",
                 function(err){
                     if(err){
                         console.log(err);
@@ -53,7 +53,7 @@ module.exports = ({inconfig}) => {
 
 
                 request.on('row', function(columns) {
-                    res.json(columns).status(200);
+                    res.json({Server: columns[0].value, SplatID: columns[1].value, EPOC: columns[2].value}).status(200);
                 });
 
 
