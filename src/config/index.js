@@ -13,8 +13,6 @@ class Config{
     this.sqluser = process.env.SQLUSER || "user";
     this.sqlpass = process.env.SQLPASS || "pass";
     this.sqldb = process.env.SQLDB || "dbname";
-    this.sqlproc = process.env.SQLPROC || "storedprocname";
-
  }
 
 }
