@@ -29,13 +29,6 @@ module.exports = ({inconfig}) => {
     api.delete('/', (req, res) => {
 
         
-            //console.log("Input User: " + req.params.userid);
-
-            var connection = new Connection(sqlconfig);
-            var uuidstring = uuidv4();
-            var epoctime = Date.now();
-            
-
           
             connection.on('connect', function(err){
                 var request = new Request("TRUNCATE TABLE dbo.SplatRecorder; SELECT COUNT([SPLATID]) FROM dbo.SplatRecorder;",
@@ -45,11 +38,6 @@ module.exports = ({inconfig}) => {
                     };
                 });
             
-                request.addParameter('SplatID', TYPES.UniqueIdentifierN, uuidstring);
-                request.addParameter('EPOCStamp', TYPES.NVarChar, `The time since EPOC is ${epoctime}`);
-            
-
-
                 request.on('row', function(columns) {
                     res.json({AfterDeleteCount: columns[0].value}).status(200);
                 });
