@@ -9,7 +9,6 @@ var Connection = require('tedious').Connection;
 var Request = require('tedious').Request;
 var express = require('express');
 var Router = express.Router;
-var TYPES = require('tedious').TYPES;
 
 let configInstance = new config();
 
@@ -53,4 +52,4 @@ module.exports = ({inconfig}) => {
     });
     
     return api;
-}
+};
